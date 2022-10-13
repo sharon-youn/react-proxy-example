@@ -4,14 +4,22 @@ import Header from './components/Header';
 import BookTable from './components/BookTable';
 import DisplayBoard from './components/DisplayBoard';
 import CreateBook from './components/CreateBook';
+import DisplayTodo from './components/DisplayTodo';
 import { getAllBooks, createBook } from './services/BookService';
+import { getAllTodos} from './services/TodoService';
+
 import Footer from './components/Footer';
+import TodoTable from './components/TodoTable';
 
 function App () {
 
   const [bookShelf, setBookShelf] = useState({});
   const [books, setBooks] = useState([]);
   const [numberOfBooks, setNumberBooks] = useState(0);
+  const [numberOfTodos, setNumberTodos] = useState(0); //eslint-disable-line no-unused-vars
+
+  const [todos, setTodos] = useState([]); //eslint-disable-line no-unused-vars
+
 
   const handleSubmit = () => {
       createBook(bookShelf)
@@ -27,7 +35,13 @@ function App () {
         setNumberBooks(data.length);
       });
   }
+const getAllTodo = () => {
+  getAllTodos()
+  .then(data => {
+    setTodos(data)
 
+  })
+}
   const handleOnChangeForm = (e) => {
       let inputData = bookShelf;
       if (e.target.name === 'book') {
@@ -54,6 +68,11 @@ function App () {
           numberOfBooks={numberOfBooks} 
           getAllBook={getAllBook} 
         />
+        <DisplayTodo
+        numberOfTodos={numberOfTodos}
+        getAllTodo={getAllTodo} 
+        />
+        <TodoTable todos={todos} />
         <BookTable books={books} />
         <Footer />
       </div>
